@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Page of Person</title>
+</head>
+<body>
+<h3>Страница пользователя</h3>
+<div th:if="${ownerOfPage == null}">
+    <p>Пользователь не найден</p>
+</div>
+<div th:unless="${ownerOfPage == null}">
+    <div th:if="${ownerBooksList.isEmpty()}">
+        <p th:text="${ownerOfPage.getFullName() + ', ' + ownerOfPage.getYearOfBirth()}"></p>
+        <p>Человек пока не взял ни одной книги</p>
+    </div>
+    <div th:unless="${ownerBooksList.isEmpty()}">
+        <p th:text="${ownerOfPage.getFullName() + ', ' + ownerOfPage.getYearOfBirth()}"></p>
+        <hr>
+        <h3>Книги: </h3>
+        <div th:each="book : ${ownerBooksList}">
+            <div th:if="${book.getOverdue()}">
+                <p style="color: red"
+                   th:text="${book.getNameOfBook() + ', ' + book.getAuthor() + ', ' + book.getYearOfPublication()}"></p>
+            </div>
+            <div th:unless="${book.getOverdue()}">
+                <p th:text="${book.getNameOfBook() + ', ' + book.getAuthor() + ', ' + book.getYearOfPublication()}"></p>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <form th:method="GET" th:action="@{/person/{id}/edit(id=${ownerOfPage.getId()})}">
+        <input style="border-radius: 8px" type="submit" value="Редактировать">
+    </form>
+    <form th:method="DELETE" th:action="@{/person/{id}(id=${ownerOfPage.getId()})}">
+        <input style="border-radius: 8px" type="submit" value="Удалить">
+    </form>
+    <form th:method="GET" th:action="@{/person}">
+        <input style="border-radius: 8px" type="submit" value="Вернуться к списку людей">
+    </form>
+</div>
+</body>
+</html>

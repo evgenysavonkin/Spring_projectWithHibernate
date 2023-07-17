@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Books</title>
+</head>
+<body>
+<h3>Список книг</h3>
+<div th:if="${books.isEmpty()}">
+    <p>Список книг пока пуст</p>
+</div>
+<div th:unless="${books.isEmpty()}">
+    <div th:each="book : ${books}">
+        <a th:href="@{/book/{id}(id=${book.getId()})}"
+           th:text="${book.getNameOfBook() + ', ' + book.getAuthor() + ', ' + book.getYearOfPublication()}"></a>
+    </div>
+</div>
+<br>
+<hr>
+<form th:method="GET" th:action="@{/book/new}">
+    <input style="border-radius: 8px" type="submit" value="Добавить книгу">
+</form>
+</body>
+</html>

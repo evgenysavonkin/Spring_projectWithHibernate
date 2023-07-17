@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h3>Список людей</h3>
+<div th:if="${people.isEmpty()}">
+    <p>Список пока пуст</p>
+</div>
+<div th:unless="${people.isEmpty()}">
+    <div th:each="person : ${people}">
+        <a th:href="@{/person/{id}(id=${person.getId()})}"
+           th:text="${person.getFullName() + ', ' + person.getYearOfBirth()}"></a>
+    </div>
+</div>
+<br>
+<hr>
+<form th:method="GET" th:action="@{/person/new}">
+    <input style="border-radius: 8px" type="submit" value="Добавить человека">
+</form>
+</body>
+</html>
