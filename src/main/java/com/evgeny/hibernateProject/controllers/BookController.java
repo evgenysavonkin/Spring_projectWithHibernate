@@ -42,7 +42,6 @@ public class BookController {
     //Пагинация
     @GetMapping(params = {"page", "books_per_page"})
     public String index(Model model, @RequestParam(name = "page") int page, @RequestParam(name = "books_per_page") int booksPerPage) {
-        System.out.println("index: Пагинация с двумя параметрами");
         model.addAttribute("books", bookService.findAll(page, booksPerPage));
         return "bookPages/index";
     }

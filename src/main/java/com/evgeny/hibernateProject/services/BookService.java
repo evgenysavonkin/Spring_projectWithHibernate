@@ -31,7 +31,6 @@ public class BookService {
     }
 
     public List<Book> findAll(int page, int booksPerPage) {
-        System.out.println("bookService: пагинация");
         return bookRepository.findAll(PageRequest.of(page, booksPerPage)).getContent();
     }
 
@@ -71,7 +70,6 @@ public class BookService {
         if (optionalBook.isPresent()) {
             Book book = optionalBook.get();
             Person owner = personService.findById(person.getId());
-            System.out.println("setPersonToBook: owner obj is " + owner);
             book.setTakenTime(new Date());
             book.setOwner(owner);
         }
